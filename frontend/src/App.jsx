@@ -1,64 +1,27 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
-import { useEffect, useState } from 'react'
-import { getHealth } from './services'
+import Layout from './components/Layout'
+import Dashboard from './pages/Dashboard'
+import Clients from './pages/Clients'
+import Projects from './pages/Projects'
+import TimeTracking from './pages/TimeTracking'
+import Income from './pages/Income'
+import Invoices from './pages/Invoices'
 
 function App() {
-  const [apiStatus, setApiStatus] = useState('checking...')
-
-  useEffect(() => {
-    const checkHealth = async () => {
-      try {
-        const response = await getHealth()
-        setApiStatus(response.data.status)
-      } catch (error) {
-        setApiStatus('error')
-      }
-    }
-
-    checkHealth()
-  }, [])
-
   return (
-    <div className="container">
-      <header className="header">
-        <h1>🚀 Orgalancer</h1>
-        <p>Plataforma para Freelancers</p>
-      </header>
-
-      <main className="main">
-        <section className="hero">
-          <h2>¡Bienvenido a Orgalancer!</h2>
-          <p>Gestiona tus clientes, proyectos, ingresos y tiempo en un solo lugar</p>
-          
-          <div className="features">
-            <div className="feature-card">
-              <h3>👥 Clientes</h3>
-              <p>Organiza y administra tus clientes</p>
-            </div>
-            <div className="feature-card">
-              <h3>📋 Proyectos</h3>
-              <p>Crea y monitorea tus proyectos</p>
-            </div>
-            <div className="feature-card">
-              <h3>💰 Ingresos</h3>
-              <p>Controla tu flujo de caja</p>
-            </div>
-            <div className="feature-card">
-              <h3>⏱️ Tiempo</h3>
-              <p>Registra el tiempo trabajado</p>
-            </div>
-          </div>
-
-          <div className="status">
-            <p>Estado de API: <strong>{apiStatus}</strong></p>
-          </div>
-        </section>
-      </main>
-
-      <footer className="footer">
-        <p>&copy; 2024 Orgalancer - Ingeniería en Informática UBA</p>
-      </footer>
-    </div>
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/time" element={<TimeTracking />} />
+          <Route path="/income" element={<Income />} />
+          <Route path="/invoices" element={<Invoices />} />
+        </Routes>
+      </Layout>
+    </Router>
   )
 }
 
